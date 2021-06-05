@@ -12,7 +12,9 @@ module.exports = {
     baseUrl: process.env.CI ? '/webgame-template' : '/',
     // sourcemap: 'inline',
   },
-  packageOptions: {},
+  packageOptions: {
+    polyfillNode: true,
+  },
   optimize: {
     treeshake: true,
     preload: true,
