@@ -3,6 +3,7 @@ import { Vector } from './Vector';
 
 export abstract class GameObject extends Sprite {
   vel = new Vector(0, 0);
+  friction = 0.5;
 
   // differentiate gameobjects from regular displayobjects
   readonly type = 'gameobject';
@@ -18,16 +19,46 @@ export abstract class GameObject extends Sprite {
     // this.anchor.set(0.5);
   }
 
-  readonly update = (delta: number): void => {
+  update(delta: number): void {
+    // avoid floating point math hell
+    if (Math.abs(this.vel.x) < 0.1) this.vel.x = 0;
+    if (Math.abs(this.vel.y) < 0.1) this.vel.y = 0;
+
     this.x += this.vel.x * delta;
     this.y += this.vel.y * delta;
+  }
 
-    this.onUpdate(delta);
-  };
+  collide(...objects: GameObject[]): void {
+    objects.forEach((object: GameObject) => {
+      if (object == this) return;
+      if (this.checkCollision(object)) {
+        const distance = this.differenceVector(object);
+        const timeToCollision = new Vector(
+          this.vel.x != 0 ? Math.abs(distance.x / this.vel.x) : 0,
+          this.vel.y != 0 ? Math.abs(distance.y / this.vel.y) : 0
+        );
+        const shortest = Math.min(timeToCollision.x, timeToCollision.y);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onUpdate(delta: number): void {
-    // nothing
+        // console.log(distance, timeToCollision);
+
+        if (this.vel.x != 0 && this.vel.y == 0) {
+          this.vel.x *= shortest;
+        } else if (this.vel.x == 0 && this.vel.y != 0) {
+          this.vel.y *= shortest;
+        } else {
+          // if we hit the x axis first, we should flatten our direction onto it
+          if (shortest == timeToCollision.x) {
+            // we are rubbing against the left/right side of the box
+            this.vel.x = 0;
+            this.vel.y *= this.friction;
+          } else {
+            // we are rubbing against the bottom/top side of a box
+            this.vel.x *= this.friction;
+            this.vel.y = 0;
+          }
+        }
+      }
+    });
   }
 
   // this.position.x + e1.velocity.x, e1.y + e1.velocity.y, e1.width, e1.height, e2.x, e2.y, e2.width, e2.height
@@ -43,7 +74,7 @@ export abstract class GameObject extends Sprite {
     );
   }
 
-  distanceTo(other: GameObject): Vector {
+  differenceVector(other: GameObject): Vector {
     const distance = new Vector(0, 0);
 
     if (this.x < other.x) {

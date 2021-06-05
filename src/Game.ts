@@ -27,6 +27,7 @@ export class Game {
   }
 
   update(delta: number): void {
+    // console.log(delta);
     this.app.stage.children.forEach(child => {
       if (GameObject.isGameObject(child)) {
         child.update(delta);
@@ -34,7 +35,7 @@ export class Game {
     });
   }
 
-  addObject(object: GameObject): void {
-    this.app.stage.addChild(object);
+  addObject(...objects: GameObject[]): void {
+    this.app.stage.addChild(...objects);
   }
 }
