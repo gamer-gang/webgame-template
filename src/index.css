@@ -1,0 +1,22 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+}
+
+body {
+  background-color: black;
+
+  font-family: sans-serif;
+  color: white;
+}
+
+.game {
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
