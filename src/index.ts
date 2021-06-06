@@ -16,7 +16,7 @@ export const app = new Application({
 
 // app.view.style.removeProperty('height');
 // app.view.style.removeProperty('width');
-document.querySelector('.game')?.appendChild(app.view);
+document.querySelector('#game')?.appendChild(app.view);
 
 export const game = new Game(app);
 

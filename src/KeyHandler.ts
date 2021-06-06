@@ -36,8 +36,8 @@ export class KeyHandler {
     canvas.addEventListener('mousemove', event => {
       // we need to convert their on screen pixels into the in game pixels
       // divide their x by width of canvas and multiply by width of game
-      this.mouse.pos.x = ((event as MouseEvent).offsetX / canvas.clientWidth) * 512;
-      this.mouse.pos.y = ((event as MouseEvent).offsetY / canvas.clientHeight) * 384;
+      this.mouse.pos.x = ((event as MouseEvent).offsetX / canvas.clientWidth) * 16 * 32;
+      this.mouse.pos.y = ((event as MouseEvent).offsetY / canvas.clientHeight) * 9 * 32;
       // console.log(`canvas width: ${canvas.clientWidth}, offsetx: ${(e as MouseEvent).offsetX}, mousex: ${this.mouse.pos.x}`)
     });
   }
