@@ -13,7 +13,7 @@ body {
   color: white;
 }
 
-.game {
+#game {
   height: 100vh;
 
   display: flex;
