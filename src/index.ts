@@ -24,11 +24,16 @@ class Box extends GameObject {}
 
 const player = new Player();
 const box = new Box();
+const box2 = new Box();
 
 player.width = 32;
 player.height = 32;
-box.x = 100;
-box.y = 100;
-box.width = 32;
+box.x = 32 * 3;
+box.y = 32 * 3;
+box.width = 32 * 3;
 box.height = 32;
-game.addObject(player, box);
+box2.x = 32 * 3;
+box2.y = 32 * 3;
+box2.width = 32;
+box2.height = 32 * 3;
+game.addObject(player, box, box2);

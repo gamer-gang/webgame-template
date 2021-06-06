@@ -49,12 +49,12 @@ export abstract class GameObject extends Sprite {
           // if we hit the x axis first, we should flatten our direction onto it
           if (shortest == timeToCollision.x) {
             // we are rubbing against the left/right side of the box
-            this.vel.x = 0;
+            this.vel.x *= shortest;
             this.vel.y *= this.friction;
           } else {
             // we are rubbing against the bottom/top side of a box
             this.vel.x *= this.friction;
-            this.vel.y = 0;
+            this.vel.y *= shortest;
           }
         }
       }
