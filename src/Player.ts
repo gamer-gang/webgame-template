@@ -4,18 +4,21 @@ import { Vector } from './Vector';
 
 export class Player extends GameObject {
   accel = new Vector(0, 0);
-  acceleration = 0.9;
+  acceleration = 1;
   friction = 0.8;
   accelFriction = 0.8;
 
   update(delta: number): void {
     this.move();
 
+    this.accel.y += 2;
     this.vel = this.vel.add(this.accel);
     this.vel = this.vel.multiply(this.friction);
     this.accel = this.accel.multiply(this.accelFriction);
 
+    // this.clampSpeed();
     this.collide(...(app.stage.children as GameObject[]));
+    // this.clampSpeed();
 
     super.update(delta);
   }
@@ -28,7 +31,7 @@ export class Player extends GameObject {
 
     if (gamepad.left) accumulatorX -= this.acceleration;
     if (gamepad.right) accumulatorX += this.acceleration;
-    if (gamepad.up) accumulatorY -= this.acceleration;
+    if (gamepad.up) accumulatorY -= this.acceleration + 2;
     if (gamepad.down) accumulatorY += this.acceleration;
 
     this.accel.x = accumulatorX;
