@@ -16,7 +16,7 @@ export class Player extends GameObject {
     this.vel = this.vel.multiply(this.friction);
     this.accel = this.accel.multiply(this.accelFriction);
 
-    // this.clampSpeed();
+    this.clampSpeed();
     this.collide(...(app.stage.children as GameObject[]));
     // this.clampSpeed();
 
